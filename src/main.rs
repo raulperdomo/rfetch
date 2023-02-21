@@ -66,15 +66,12 @@ fn main() {
        ^7~ .   ..::^^~~!!^:^!~~^::..   ...?^      
          ^~.                             !.       
            :                            :    ";     
-                                                  
    
-    // println!("{}", &ferris.bright_red());
-    // println!("{}", &happy_ferris.bright_red());
-    // println!("{}", &little_ferris.bright_red());
-
     let options = Options::from_args();
     let mut crab = String::new();
+
     if options.cute {
+    ///Figure out which version to print.
       crab = cute_ferris.to_string();
     } else if options.mini{
       crab = little_ferris.to_string();
@@ -83,7 +80,6 @@ fn main() {
     }
 
     let mut crab_width = if options.mini { 20 } else { 53 };
-    // crab
     let systeminfo = sys::sysinfo::sysinfo().unwrap();
 
     let lines = crab.lines();
@@ -98,26 +94,9 @@ fn main() {
         6 =>       println!("{}", format!("{:<crab_width$} {:<6} {}M / {}M", line.bright_red(), "Memory".bold().red().dimmed(), (systeminfo.ram_total() - &systeminfo.ram_unused())/1000000, &systeminfo.ram_total()/1000000)),
         7 =>       println!("{}", format!("{:<crab_width$} {:<6} {:.2}/{:.2}/{:.2}", line.bright_red(), "Load".bold().red().dimmed(), systeminfo.load_average().0, systeminfo.load_average().1, systeminfo.load_average().2)),
         8 =>       println!("{}", format!("{:<crab_width$} {:<6} {}", line.bright_red(), "Uptime".bold().red().dimmed(), format_duration(systeminfo.uptime()))),
-
-
         _ =>       println!("{}", format!("{:<65}", line.bright_red())),
 
       }
 
     }
-    // dbg!(sys::sysinfo::sysinfo().unwrap());
-    // dbg!(sys::utsname::uname().unwrap().sysname().);
-    // dbg!(sys::utsname::uname().unwrap().nodename());
-    // dbg!(sys::utsname::uname().unwrap().release());
-    // dbg!(sys::utsname::uname().unwrap().version());
-    // dbg!(sys::utsname::uname().unwrap().machine());
-    // dbg!(sys::utsname::uname().unwrap().domainname());
-
-
-  
 }
-
-
-
-   
-
