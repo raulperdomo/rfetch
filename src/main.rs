@@ -68,10 +68,10 @@ fn main() {
            :                            :    ";     
    
     let options = Options::from_args();
-    let crab: String;
+    let mut crab = String::new();
 
     if options.cute {
-    //Figure out which version to print.
+    ///Figure out which version to print.
       crab = cute_ferris.to_string();
     } else if options.mini{
       crab = little_ferris.to_string();
@@ -79,15 +79,16 @@ fn main() {
       crab = happy_ferris.to_string();
     }
 
-    let crab_width = if options.mini { 20 } else { 53 };
+    let mut crab_width = if options.mini { 20 } else { 53 };
     let systeminfo = sys::sysinfo::sysinfo().unwrap();
 
     let lines = crab.lines();
+    let lines_count = &lines.clone().count();
     for (idx, line) in lines.enumerate() {
       match idx {
-        1 =>       println!("{}", format!("{:<crab_width$} {}@{}", line.bright_red(), whoami::username(), fallible::hostname().unwrap())),
+        1 =>       println!("{}", format!("{:<crab_width$} {}@{}", line.bright_red(), whoami::username(), whoami::hostname())),
         2 =>       println!("{}", format!("{:<crab_width$} {:<6} {}", line.bright_red(), "OS".bold().red().dimmed(), whoami::distro())),
-        3 =>       println!("{}", format!("{:<crab_width$} {:<6} {}", line.bright_red(), "Host".bold().red().dimmed(), fallible::hostname().unwrap())),
+        3 =>       println!("{}", format!("{:<crab_width$} {:<6} {}", line.bright_red(), "Host".bold().red().dimmed(), whoami::hostname())),
         4 =>       println!("{}", format!("{:<crab_width$} {:<6} {} {}", line.bright_red(), "Kernel".bold().red().dimmed(), sys::utsname::uname().unwrap().sysname().to_str().unwrap(), sys::utsname::uname().unwrap().release().to_str().unwrap())),
         5 =>       println!("{}", format!("{:<crab_width$} {:<6} {}", line.bright_red(), "Arch".bold().red().dimmed(), whoami::arch())),
         6 =>       println!("{}", format!("{:<crab_width$} {:<6} {}M / {}M", line.bright_red(), "Memory".bold().red().dimmed(), (systeminfo.ram_total() - &systeminfo.ram_unused())/1000000, &systeminfo.ram_total()/1000000)),
